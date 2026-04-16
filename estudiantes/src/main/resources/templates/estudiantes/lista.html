@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Estudiantes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+        th { background-color: #1a3a6b; color: white; }
+        a.btn { display: inline-block; padding: 6px 12px; margin: 2px;
+                background-color: #1a3a6b; color: white; text-decoration: none;
+                border-radius: 4px; }
+        a.btn-danger { background-color: #c0392b; }
+        a.btn-success { background-color: #27ae60; }
+    </style>
+</head>
+<body>
+    <h1>Lista de Estudiantes</h1>
+    <a class="btn btn-success" th:href="@{/estudiantes/nuevo}">+ Nuevo Estudiante</a>
+    <br><br>
+
+    <div th:if="${#lists.isEmpty(estudiantes)}">
+        <p>No hay estudiantes registrados.</p>
+    </div>
+
+    <table th:unless="${#lists.isEmpty(estudiantes)}">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Carrera</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="e : ${estudiantes}">
+                <td th:text="${e.id}"></td>
+                <td th:text="${e.nombre}"></td>
+                <td th:text="${e.apellido}"></td>
+                <td th:text="${e.correo}"></td>
+                <td th:text="${e.carrera}"></td>
+                <td>
+                    <a class="btn" th:href="@{/estudiantes/editar/{id}(id=${e.id})}">Editar</a>
+                    <a class="btn btn-danger" th:href="@{/estudiantes/eliminar/{id}(id=${e.id})}">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
